@@ -11,7 +11,7 @@ var height = 20;
 var width = 20;
 
 // speed of snake
-var interval = 100;
+var interval = 80;
 
 // size increase of snake per munch
 var increment = 1; 
@@ -25,18 +25,16 @@ var tailYC = [snakeYC];
 // fruit variables
 var fruitXC;
 var fruitYC;
-// boolean for game to continue
+// boolean to enable pause functionality
 var running = false;
 // boolean for game to end
 var gameOver = false;
 // variables for direction: up = 0, down = 2, left = 3, right = 1
 var direction;  
-//
+
 var interval;
 // score starts off from zero
 var score = 0; 
-//temporary direction (this fixes users pressing keys too quickly and turning into themselves) 
-var tempdir = direction; 
  
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -122,18 +120,18 @@ function CreateFruit(){
 
 window.addEventListener("keypress", function Key(push){ 
     //if W is press snake moves up
-    var keyNo = push.keyCode;
+    var keyNo = (push.which) ? push.which : push.keyNo;
     if(direction != 2 && (keyNo == 119 || keyNo == 87 || keyNo == 38)) 
-        tempdir = 0; 
+        direction = 0; 
     //if S is press snake moves down 
     else if(direction != 0 && (keyNo == 115 || keyNo == 83 || keyNo == 40)) 
-        tempdir = 2; 
+        direction = 2; 
     //if A is press snake moves left 
     else if(direction != 1 && (keyNo == 97 || keyNo == 65 || keyNo == 37)) 
-        tempdir = 3; 
+        direction = 3; 
     //if D is press snake moves right
     else if(direction != 3 && (keyNo == 100 || keyNo == 68 || keyNo == 39)) 
-        tempdir = 1; 
+        direction = 1; 
     if(!running) 
         running = true; 
     else if(keyNo == 32) 
@@ -142,7 +140,6 @@ window.addEventListener("keypress", function Key(push){
  
 // updates game while running
 function Update(){ 
-    direction = tempdir; 
     //Ensures that the fruit is displayed 
     Set(fruitXC, fruitYC, "fruit"); 
     //update the tail 
@@ -168,7 +165,7 @@ function Update(){
         } 
     } 
     //checks for collision with wall 
-    if(snakeXC == -1 || snakeXC == width || snakeYC == -1 || snakeYC == height) 
+    if(snakeXC == 0 || snakeXC == 19 || snakeYC == 0 || snakeYC == 19) 
         gameOver = true; 
     //checks for collisions with fruit 
     else if(snakeXC == fruitXC && snakeYC == fruitYC){ 
