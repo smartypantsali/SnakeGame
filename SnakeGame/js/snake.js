@@ -94,6 +94,7 @@ function Set(x,y,value){
         Get(x,y).setAttribute("class", value); 
 } 
 
+// Get attribute class and asign to x,y
 function GetType(x,y){ 
     return Get(x,y).getAttribute("class"); 
 } 
